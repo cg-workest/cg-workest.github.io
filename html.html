@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Clicker</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .coin-button {
+            font-size: 24px;
+            padding: 20px;
+            margin: 20px;
+            background-color: #f0ad4e;
+            border: none;
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+        }
+        .tab {
+            margin: 10px;
+            padding: 10px;
+            border-bottom: 2px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>Coin Clicker</h1>
+    <button class="coin-button" onclick="earnCoins()">Click to Earn Coins</button>
+    <p>Coins: <span id="coin-count">0</span></p>
+
+    <div class="tab" id="cards-tab">
+        <h2>Your Cards</h2>
+        <div id="cards-list"></div>
+    </div>
+    <div class="tab" id="shop-tab">
+        <h2>Shop</h2>
+        <!-- Здесь будут отображаться предметы и карточки для покупки -->
+    </div>
+
+    <script>
+        let coins = 0;
+        let incomePerHour = 0;
+
+        function earnCoins() {
+            coins += 1;
+            document.getElementById('coin-count').innerText = coins;
+        }
+
+        function updateIncome() {
+            // Логика для обновления дохода на основе карточек
+        }
+
+        // Инициализация приложения Telegram
+        Telegram.WebApp.ready();
+    </script>
+</body>
+</html>
