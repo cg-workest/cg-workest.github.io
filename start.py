@@ -34,7 +34,7 @@ async def leaderboard(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
     await update.message.reply_text("Топ игроков!")
 
 # Создание экземпляра приложения
-application = Application.builder().token("5458560576:AAHe_ZYyRlUa7FUn-E1t8MTW9ZhHLBaprz0").build()
+application = Application.builder().token("7449372257:AAG8beZTG_qeGJt_AH3Ps0MpH0MS6UTMxnQ").build()
 
 # Добавление обработчиков команд и кнопок
 application.add_handler(CommandHandler("start", start))
