@@ -6,29 +6,89 @@
     <title>Coin Clicker</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgb(0, 123, 255);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+        }
+
+        /* Body styles */
         body {
             font-family: Arial, sans-serif;
             text-align: center;
+            display: none; /* Hidden until preloader is done */
         }
+
         .coin-button {
             font-size: 24px;
             padding: 20px;
             margin: 20px;
             background-color: #f0ad4e;
             border: none;
-            border-radius: 10px;
+            border-radius: 50%;
             color: white;
             cursor: pointer;
+            position: relative;
         }
+
+        /* Button animation */
+        .coin-button:hover {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            }
+            100% {
+                box-shadow: 0 0 0 30px rgba(255, 255, 255, 0);
+            }
+        }
+
         .tab {
             margin: 10px;
             padding: 10px;
             border-bottom: 2px solid #ddd;
         }
+
+        /* Bottom menu */
+        .bottom-menu {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            background-color: #f8f9fa;
+            padding: 10px;
+        }
+
+        .bottom-menu button {
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
-    <h1>Coin Clicker</h1>
+
+    <!-- Preloader -->
+    <div id="preloader">Loading...</div>
+
+    <h1 id="welcome-message"></h1>
+
     <button class="coin-button" onclick="earnCoins()">Click to Earn Coins</button>
     <p>Coins: <span id="coin-count">0</span></p>
 
@@ -36,26 +96,73 @@
         <h2>Your Cards</h2>
         <div id="cards-list"></div>
     </div>
+
     <div class="tab" id="shop-tab">
         <h2>Shop</h2>
-        <!-- Здесь будут отображаться предметы и карточки для покупки -->
+        <!-- Items for purchase will be displayed here -->
+    </div>
+
+    <!-- Bottom Menu -->
+    <div class="bottom-menu">
+        <button>Home</button>
+        <button>Profile</button>
+        <button>Shop</button>
+        <button>Leaderboard</button>
+        <button>Settings</button>
     </div>
 
     <script>
-        let coins = 0;
-        let incomePerHour = 0;
+        // Preloader logic
+        window.onload = function() {
+            setTimeout(() => {
+                document.getElementById('preloader').style.display = 'none';
+                document.body.style.display = 'block';
+            }, 2000); // Simulates 2 seconds load time
+        };
 
+        let coins = 0;
+        let saveThreshold = 100;
+        let totalClicks = 0;
+        let userRank = 0;
+
+        // Earn coins function
         function earnCoins() {
             coins += 1;
+            totalClicks += 1;
             document.getElementById('coin-count').innerText = coins;
+
+            if (totalClicks % saveThreshold === 0) {
+                saveProgress();
+            }
+
+            updateUserRank();
         }
 
-        function updateIncome() {
-            // Логика для обновления дохода на основе карточек
+        // Save user progress every 100 clicks
+        function saveProgress() {
+            // Simulate saving to server
+            console.log(`Progress saved for user! Total clicks: ${totalClicks}`);
         }
 
-        // Инициализация приложения Telegram
-        Telegram.WebApp.ready();
+        // Update user rank based on total clicks
+        function updateUserRank() {
+            if (totalClicks < 1000) {
+                userRank = 1; // League 1
+            } else if (totalClicks < 5000) {
+                userRank = 2; // League 2
+            } else if (totalClicks < 10000) {
+                userRank = 3; // League 3
+            } else if (totalClicks < 100000) {
+                userRank = 10; // League 10
+            }
+            console.log(`User is in league: ${userRank}`);
+        }
+
+        // Initialize Telegram Web App and display welcome message
+        Telegram.WebApp.ready(function() {
+            const user = Telegram.WebApp.initDataUnsafe?.user?.first_name || 'User';
+            document.getElementById('welcome-message').innerText = `Welcome, ${user}!`;
+        });
     </script>
 </body>
 </html>
