@@ -5,12 +5,12 @@ from telegram.ext import Application, CommandHandler, CallbackQueryHandler, Cont
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user = update.effective_user
 
-    # URL вашего веб-приложения, например: F:\1.ЗАГРУЗКИ\BD\cliker\html.html
-    web_app_url = "F:\1.ЗАГРУЗКИ\BD\cliker\html.html"
+    # URL вашего веб-приложения (например, с GitHub Pages)
+    web_app_url = "https://cg-workest.github.io/"  # Укажите ссылку на ваше веб-приложение
 
     keyboard = [
         [
-            InlineKeyboardButton("Запуск кликера", web_app=web_app_url)
+            InlineKeyboardButton("Запуск кликера", url=web_app_url)
         ]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
